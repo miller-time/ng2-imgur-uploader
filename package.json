@@ -1,0 +1,13 @@
+{
+  "name": "ng2-imgur-uploader",
+  "version": "0.0.0",
+  "description": "Imgur Upload tools for Angular 2",
+  "repository": {
+    "type": "git",
+    "git://github.com/miller-time/ng2-imgur-uploader"
+  },
+  "author": {
+    "name": "Russell Cousineau"
+  },
+  "license": "MIT"
+}

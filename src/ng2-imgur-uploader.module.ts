@@ -13,7 +13,7 @@ export class Ng2ImgurUploaderModule {
 }
 
 function ng2ImgurFactory() {
-    return new Ng2ImgurUploader();
+    return new Ng2ImgurUploader(null);
 }
 
 function ng2ImgurProvider(): Provider[] {

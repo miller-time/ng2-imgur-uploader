@@ -41,6 +41,11 @@ export class Ng2ImgurUploader {
         return result;
     }
 
+    delete(deleteHash: string): Observable<string> {
+        return this.http.delete(`https://api.imgur.com/3/image${deleteHash}`)
+            .map((res: Response) => res.text());
+    }
+
     private sendImgurRequest(
         imageBase64: string,
         uploadOptions: ImgurUploadOptions,

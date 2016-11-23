@@ -11,6 +11,14 @@ export type ImgurUploadOptions = {
     title?: string
 };
 
+export type ImgurUploadResponse = {
+    data?: {
+        link: string,
+        deleteHash: string
+    },
+    success: boolean
+};
+
 @Injectable()
 export class Ng2ImgurUploader {
     constructor(
@@ -18,7 +26,7 @@ export class Ng2ImgurUploader {
     ) { }
 
     upload(uploadOptions: ImgurUploadOptions) {
-        let result = new Subject<string>();
+        let result = new Subject<ImgurUploadResponse>();
 
         FileReaderUtils.imageDataToBase64(uploadOptions.imageData)
             .subscribe(
@@ -36,8 +44,8 @@ export class Ng2ImgurUploader {
     private sendImgurRequest(
         imageBase64: string,
         uploadOptions: ImgurUploadOptions,
-        result: Subject<string>
-    ): Observable<string> {
+        result: Subject<ImgurUploadResponse>
+    ): Observable<ImgurUploadResponse> {
         let headers = new Headers({
             Authorization: 'Client-ID ' + uploadOptions.clientId,
             Accept: 'application/json'
@@ -52,7 +60,14 @@ export class Ng2ImgurUploader {
         this.http.post('https://api.imgur.com/3/image', body, options)
             .subscribe(
                 (res: Response) => {
-                    result.next('uploaded successfully');
+                    let responseData = res.json().data;
+                    result.next({
+                        data: {
+                            link: responseData.link,
+                            deleteHash: responseData.deletehash
+                        },
+                        success: true
+                    });
                     result.complete();
                 },
                 (err: Response) => {

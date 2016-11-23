@@ -71,7 +71,7 @@ export class Ng2ImgurUploader {
                     result.complete();
                 },
                 (err: Response) => {
-                    result.error('error uploading image: ' + err.text);
+                    result.error('error uploading image: ' + err.text());
                 }
             );
 

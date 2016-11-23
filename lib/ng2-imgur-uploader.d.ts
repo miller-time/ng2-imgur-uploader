@@ -22,6 +22,7 @@ export declare class Ng2ImgurUploader {
         };
         success: boolean;
     }>;
-    delete(deleteHash: string): Observable<string>;
+    delete(clientId: string, deleteHash: string): Observable<string>;
+    private buildRequestOptions(clientId);
     private sendImgurRequest(imageBase64, uploadOptions, result);
 }

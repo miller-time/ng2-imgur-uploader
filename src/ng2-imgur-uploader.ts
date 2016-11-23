@@ -41,9 +41,18 @@ export class Ng2ImgurUploader {
         return result;
     }
 
-    delete(deleteHash: string): Observable<string> {
-        return this.http.delete(`https://api.imgur.com/3/image${deleteHash}`)
+    delete(clientId: string, deleteHash: string): Observable<string> {
+        let options = this.buildRequestOptions(clientId);
+        return this.http.delete(`https://api.imgur.com/3/image/${deleteHash}`)
             .map((res: Response) => res.text());
+    }
+
+    private buildRequestOptions(clientId) {
+        let headers = new Headers({
+            Authorization: 'Client-ID ' + clientId,
+            Accept: 'application/json'
+        });
+        return new RequestOptions({headers: headers});
     }
 
     private sendImgurRequest(
@@ -51,11 +60,7 @@ export class Ng2ImgurUploader {
         uploadOptions: ImgurUploadOptions,
         result: Subject<ImgurUploadResponse>
     ): Observable<ImgurUploadResponse> {
-        let headers = new Headers({
-            Authorization: 'Client-ID ' + uploadOptions.clientId,
-            Accept: 'application/json'
-        });
-        let options = new RequestOptions({headers: headers});
+        let options = this.buildRequestOptions(uploadOptions.clientId);
         let body = {
             image: imageBase64,
             title: uploadOptions.title,

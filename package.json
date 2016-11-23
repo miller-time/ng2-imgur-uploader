@@ -1,6 +1,6 @@
 {
   "name": "ng2-imgur-uploader",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Imgur Upload tools for Angular 2",
   "repository": {
     "type": "git",
